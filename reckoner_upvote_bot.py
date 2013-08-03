@@ -112,7 +112,7 @@ def CommentUp(comment, errorcount):
 
 chdir("/home/anxst/bots")
 r = praw.Reddit('Making xxRECKONERxx feel better about himself by anxst')
-r.login('RECKONER_upvote_bot','8GdtIaE1mD21uA7Smobt')
+r.login('RECKONER_upvote_bot','PASSWORD')
 user_name = "xxRECKONERxx"
 user = r.get_redditor(user_name)
 user.friend()
