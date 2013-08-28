@@ -112,9 +112,9 @@ def CommentUp(comment, errorcount):
 
 chdir("/home/anxst/bots")
 r = praw.Reddit('Making xxRECKONERxx feel better about himself by anxst')
-r.login('RECKONER_upvote_bot','PASSWORD')
+r.login('SONofxxRECKONERxxBot','PASSWORD')
 user_name = "xxRECKONERxx"
-user = r.get_redditor(user_name)
+user = r.get_redditor(user_name,"cigars")
 user.friend()
 f = open("alreadydone.txt", "r")
 already_done = set()
