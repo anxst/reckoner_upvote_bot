@@ -67,15 +67,17 @@ def SubmissionUp(sub, errorcount):
         f.write("%s\r\n" % sub.id)
         f.close
     except HTTPError:
-		if errorcount < 10:
-			errorcount += 1
-			sleep(30)
-			SubmissionUp(sub, errorcount)
-		else:
-			already_done.add(sub.id)
-			f = open("alreadydone.txt", "a")
-			f.write("%s\r\n" % sub.id)
-			f.close
+        if errorcount < 10:
+            errorcount += 1
+            sleep(30)
+            SubmissionUp(sub, errorcount)
+        else:
+            already_done.add(sub.id)
+            f = open("alreadydone.txt", "a")
+            f.write("%s\r\n" % sub.id)
+            f.close
+
+		
 
 def CommentUp(comment, errorcount):
     try:
@@ -98,24 +100,25 @@ def CommentUp(comment, errorcount):
         f.write("%s\r\n" % comment.id)
         f.close
     except HTTPError:
-		if errorcount < 10:
-			errorcount += 1
-			sleep(30)
-			CommentUp(comment, errorcount)
-		else:
-			already_done.add(comment.id)
-			f = open("alreadydone.txt", "a")
-			f.write("%s\r\n" % comment.id)
-			f.close
-	
+        if errorcount < 10:
+            errorcount += 1
+            sleep(30)
+            CommentUp(comment, errorcount)
+        else:
+            already_done.add(comment.id)
+            f = open("alreadydone.txt", "a")
+            f.write("%s\r\n" % comment.id)
+            f.close
+
         
 
 chdir("/home/anxst/bots")
 r = praw.Reddit('Making xxRECKONERxx feel better about himself by anxst')
 r.login('SONofxxRECKONERxxBot','PASSWORD')
 user_name = "xxRECKONERxx"
-user = r.get_redditor(user_name,"cigars")
+user = r.get_redditor(user_name)
 user.friend()
+sub_reddit = r.get_subreddit('cigars')
 f = open("alreadydone.txt", "r")
 already_done = set()
 past_done = f.readlines()
@@ -124,13 +127,11 @@ for past in past_done:
     already_done.add(past.strip())  
 the_limit = 1000
 while True:
-    gen1 = user.get_submitted(limit=the_limit)
-    for sub in gen1:
+    for sub in sub_reddit.search('author:"xxRECKONERxx"'):
         if sub.id not in already_done:
 			errorcount = 0
 			SubmissionUp(sub, errorcount)
-	gen2 = user.get_comments(limit=the_limit)
-    for comment in gen2:
+    for comment in sub_reddit.search('author:"xxRECKONERxx"'):
         if comment.id not in already_done:
 			errorcount = 0
 			CommentUp(comment, errorcount)
